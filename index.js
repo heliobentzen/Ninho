@@ -36,7 +36,7 @@ app.get("/produto", (req, res)=>{
 app.post("/salvarProduto", (req, res)=>{
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
-    res.send("Form recebido! titulo: " + titulo +
-    "Descricao: " + descricao);
+    
+    
 });
 
