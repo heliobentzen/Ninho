@@ -3,6 +3,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
 
+const Produto = require("./database/Produto");
+
 connection
     .authenticate()
     .then(()=>{
@@ -26,7 +28,16 @@ app.listen(8080, ()=>{
 });
 
 app.get("/", (req, res)=>{
-    res.render("index");
+    res.render('index');
+});
+
+app.get("/produtoslist", (req, res)=>{
+    Produto.findAll({ raw : true}).then(produtos=> {
+        res.render("produtoslist", {
+            produtos : produtos
+        });
+    });
+    
 });
 
 app.get("/produto", (req, res)=>{
@@ -36,7 +47,11 @@ app.get("/produto", (req, res)=>{
 app.post("/salvarProduto", (req, res)=>{
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
-    
-    
+    Produto.create({
+        titulo : titulo,
+        descricao : descricao
+    }).then(()=>{ 
+        res.redirect("/");
+    });    
 });
 
