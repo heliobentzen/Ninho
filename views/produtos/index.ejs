@@ -1,13 +1,37 @@
-<%- include('../partials/header') %> 
-<%- include('../partials/navbar') %> 
-
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
 <div class="container">
-
-    <% produtos.forEach(produto => { %> 
-        <p><%= produto.titulo %></p>        
-        <p><%= produto.descricao %></p>
-    <% }) %>
-
+    <hr>
+    <h2>Lista de Produtos</h2>
+    <a href="/produto/novo" class="btn btn-success">Novo Produto</a>
+    <hr>
+    <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% produtos.forEach(produto=> { %>
+            <tr>
+                <td><%= produto.titulo %></td>
+                <td><%= produto.descricao %></td>
+                <td>
+                    <a href="/produto/edit/<%= produto.id %>"
+                        class="btn btn-warning">
+                        Editar</a>
+                    <form action="/produto/delete" method="post"
+                    style="display:inline;">
+                      <input type="hidden" name="id" 
+                      value="<%= produto.id %>" >
+                      <button class="btn btn-danger">Deletar</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+    </table>
 </div>
-
-<%- include('../partials/footer') %> 
+<%- include('../partials/footer') %>

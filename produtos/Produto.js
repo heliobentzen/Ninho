@@ -12,5 +12,9 @@ const Produto = connection
             allowNull: false
         }
     });
+
+//Produto.belongsTo(Categoria);
+//Categoria.hasMany(Produto);
+
 Produto.sync({force: false});
 module.exports = Produto;

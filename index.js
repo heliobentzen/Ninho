@@ -2,12 +2,20 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
+//npm i express-session
+const session = require("express-session");
 
 const Produto = require("./produtos/Produto");
-const produtosController = 
-require("./produtos/ProdutoController");
+const produtoController = require("./produtos/produtoController");
 
-app.use("/", produtosController);
+
+//EJS como view engine
+app.set('view engine', 'ejs');
+
+//Sessão
+app.use(session({
+     secret: 'projeto ninho segredo', cookie: { maxAge: 180000 }
+}))
 
 connection
     .authenticate()
@@ -21,8 +29,8 @@ connection
 app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json());
 
-//EJS como view engine
-app.set('view engine', 'ejs');
+//apos o bodyparser
+app.use("/", produtoController);
 
 //definindo a pasta de arquivos estaticos
 app.use(express.static('public'));
@@ -32,7 +40,6 @@ app.listen(8080, ()=>{
 });
 
 app.get("/", (req, res)=>{
-    console.log(req.body);      // your JSON
     res.render('index');
 });
 
