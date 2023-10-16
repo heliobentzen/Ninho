@@ -3,7 +3,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
 
-const Produto = require("./database/Produto");
+const Produto = require("./produtos/Produto");
+const produtosController = 
+require("./produtos/ProdutoController");
+
+app.use("/", produtosController);
 
 connection
     .authenticate()
@@ -28,30 +32,8 @@ app.listen(8080, ()=>{
 });
 
 app.get("/", (req, res)=>{
+    console.log(req.body);      // your JSON
     res.render('index');
 });
 
-app.get("/produtoslist", (req, res)=>{
-    Produto.findAll({ raw : true}).then(produtos=> {
-        res.render("produtoslist", {
-            produtos : produtos
-        });
-    });
-    
-});
-
-app.get("/produto", (req, res)=>{
-    res.render("produto");
-});
-
-app.post("/salvarProduto", (req, res)=>{
-    var titulo = req.body.titulo;
-    var descricao = req.body.descricao;
-    Produto.create({
-        titulo : titulo,
-        descricao : descricao
-    }).then(()=>{ 
-        res.redirect("/");
-    });    
-});
 
