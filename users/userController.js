@@ -11,17 +11,16 @@ router.get("/users", (req, res)=>{
     });
 })
 
-router.get("/usuario/novo", (req, res)=>{
-    res.render("/users/novo");
+router.get("/user/novo", (req, res)=>{
+    res.render("users/novo");
 });
 
 router.post("/users/create", (req, res)=> {
    var email = req.body.email;
    var senha = req.body.senha;
 
-   User.findOne({where : 
-    { email : email}}.then(user => {
-        if(user == undefined){
+   User.findOne({where:{email: email}}).then( user => {
+    if(user == undefined){
 
             const hash = bcrypt.hashSync(senha, 10);
 
@@ -35,11 +34,11 @@ router.post("/users/create", (req, res)=> {
         }else{
             res.redirect("/");
         }
-    }))  
+    })
 });
 
 router.get("/login", (req, res)=>{
-    res.render("/users/login");
+    res.render("users/login");
 });
 
 router.post("/autenticar", (req, res)=> {
@@ -65,7 +64,7 @@ router.post("/autenticar", (req, res)=> {
 
 router.get("/logout", (req, res)=>{
     req.session.user = undefined;
-    res.redirect("/login");
+    res.redirect("/users/login");
 });
 
 module.exports = router;
