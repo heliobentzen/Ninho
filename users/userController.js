@@ -67,3 +67,5 @@ router.get("/logout", (req, res)=>{
     req.session.user = undefined;
     res.redirect("/login");
 });
+
+module.exports = router;

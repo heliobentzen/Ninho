@@ -6,8 +6,9 @@ const connection = require("./database/database");
 const session = require("express-session");
 
 const Produto = require("./produtos/Produto");
-const produtoController = require("./produtos/produtoController");
-
+const produtoController = require("./produtos/ProdutoController");
+const User = require("./users/User");
+const userController = require("./users/userController");
 
 //EJS como view engine
 app.set('view engine', 'ejs');
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 
 //apos o bodyparser
 app.use("/", produtoController);
+app.use("/", userController);
 
 //definindo a pasta de arquivos estaticos
 app.use(express.static('public'));
@@ -42,5 +44,3 @@ app.listen(8080, ()=>{
 app.get("/", (req, res)=>{
     res.render('index');
 });
-
-
