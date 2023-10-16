@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Produto = require("./Produto");
+const auth = require("../middlewares/auth");
 
 router.get("/produtos", auth, (req, res) => {
     Produto.findAll({ raw: true }).then(produtos => {
